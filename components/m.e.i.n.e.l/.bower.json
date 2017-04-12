@@ -1,0 +1,32 @@
+{
+  "name": "m.e.i.n.e.l",
+  "description": "Visualization library for data gathered trough Massive Open Online Courses (MOOCs)",
+  "main": "barchart-basic.html",
+  "authors": [
+    "Jakob Edding",
+    "Lars Lange",
+    "Maximilian Voelkers",
+    "Florian Wirtz"
+  ],
+  "homepage": "https://openhpi.github.io/m.e.i.n.e.l/",
+  "dependencies": {
+    "polymer": "^1.7.1",
+    "plotly.js": "^1.22.0"
+  },
+  "devDependencies": {
+    "iron-component-page": "^1.1.8",
+    "iron-demo-helpers": "^1.2.5",
+    "web-component-tester": "^5.0.0",
+    "webcomponentsjs": "^0.7.23"
+  },
+  "_release": "f219ae1211",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "f219ae1211ec6fe3cfd79ee5bbd54ec451aed09f"
+  },
+  "_source": "https://github.com/openhpi/m.e.i.n.e.l.git",
+  "_target": "master",
+  "_originalSource": "openhpi/m.e.i.n.e.l",
+  "_direct": true
+}
