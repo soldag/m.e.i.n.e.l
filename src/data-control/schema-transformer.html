@@ -1,0 +1,104 @@
+<link rel="import" href="../../../polymer/polymer.html">
+<link rel="import" href="../behaviors/data-transformer-behavior.html">
+
+<!--
+`schema-transformer`
+
+@demo demo/data_control/schema_transformer_demo.html
+-->
+<dom-module id="schema-transformer">
+    <template>
+    <content id="chartingElement"></content>
+  </template>
+    <script>
+        window.addEventListener("WebComponentsReady", function(){
+        Polymer({
+            is: 'schema-transformer',
+            behaviors: [DataTransformerBehavior],
+            properties: {
+                mappings: Array,
+                noMerge: Boolean,
+            },
+            observers: [
+                'update(mapping.*)',
+            ],
+            /**
+             * Transforms the data into a plotly readable object.
+             * @param  {Object} data The source data.
+             * @return {Object}      The transformed data.
+             */
+            transformData: function(data) {
+                if(!Array.isArray(data)) {
+                    data = [data];
+                }
+
+                if(this.noMerge) {
+                    let that = this;
+                    return this._flatten(data.map(function(item) {
+                        return that._applyMappings(item);
+                    }));
+                } else {
+                    return this._applyMappings(data);
+                }
+            },
+            _applyMappings: function(data) {
+                let that = this;
+                return this.mappings.map(function(mapping) {
+                    let result = {};
+                    for(let key of Object.keys(mapping)) {
+                        let transformType = mapping[key].type;
+                        result[key] = that._applyTransformation(transformType, data, mapping[key]);
+                    }
+
+                    return result;
+                });
+            },
+            _applyTransformation: function(type, data, mapping) {
+                switch(type) {
+                    case 'constant':
+                        return this._applyConstantMapping(mapping, data);
+                    case 'collect':
+                        return this._applyCollectMapping(mapping, data);
+                    case 'keys':
+                        return this._applyKeysMapping(mapping, data);
+                    case 'values':
+                        return this._applyValuesMapping(mapping, data);
+                }
+            },
+            _applyConstantMapping: function(mapping) {
+                return mapping.value;
+            },
+            _applyCollectMapping: function(mapping, data) {
+                if(!Array.isArray(data)) {
+                    return data[mapping.sourceKey];
+                }
+
+                return data.map(function(item) {
+                    return item[mapping.sourceKey];
+                });
+            },
+            _applyKeysMapping: function(mapping, data) {
+                if(!Array.isArray(data)) {
+                    data = [data];
+                }
+
+                return this._flatten(data.map(function(item) {
+                    return Object.keys(item);
+                }));
+            },
+            _applyValuesMapping: function(mapping, data) {
+                if(!Array.isArray(data)) {
+                    data = [data];
+                }
+
+                return this._flatten(data.map(function(item) {
+                    return Object.values(item);
+                }));
+            },
+            _flatten: function(arrays) {
+                return [].concat.apply([], arrays);
+            }
+        });
+     });
+    </script>
+</dom-module>
