@@ -49,12 +49,12 @@ This component handles a given url by asynchronously fetching data from it and p
                 _handleResponse: function(response) {
                     if(!response.detail.response) return;
 
-                    let body = JSON.parse(JSON.stringify(response.detail.response));  //we need a deep copy here. See benchmark: http://jsben.ch/#/bWfk9
-                    let data = this._handlePagination(body);
+                    var body = JSON.parse(JSON.stringify(response.detail.response));  //we need a deep copy here. See benchmark: http://jsben.ch/#/bWfk9
+                    var data = this._handlePagination(body);
                     if(data) {
                         this.publishData(this._parseData(data));
                         if(this.refreshInterval) {
-                            let that = this;
+                            var that = this;
                             this._refreshTimeout = setTimeout(function() {
                                 that.$.ajaxCaller.generateRequest();
                             }, this.refreshInterval);
@@ -76,7 +76,7 @@ This component handles a given url by asynchronously fetching data from it and p
                             this.$.ajaxCaller.generateRequest();
                             return;
                         } else {
-                            let responseData = this._responseData;
+                            var responseData = this._responseData;
                             this._responseData = [];
                             this.$.ajaxCaller.url = this.dataUrl;
                             return responseData;

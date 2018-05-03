@@ -276,10 +276,10 @@ This component shows an activity history, similar to the colored github chart.
         _plotVisualization: function(data) {
           // find min/max values in the data except if they're overwritten, use original data input array for convenience
           if(this.minValue == null) {
-            this.minValue = Math.min(...data[0].y);
+            this.minValue = Math.min.apply(null, data[0].y);
           }
           if(this.maxValue == null) {
-            this.maxValue = Math.max(...data[0].y);
+            this.maxValue = Math.max.apply(null, data[0].y);
           }
 
           //the appropriate color is calculated based on the value of the datum, there is no set of fixed colors

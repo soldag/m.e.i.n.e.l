@@ -58,7 +58,7 @@ This is a component for filtering data based on user input.
                * @return {Object}      The transformed data.
                */
               transformData: function(data) {
-                  let that = this;
+                  var that = this;
                   data.forEach(function(series, index) {
                       series.name = series.name || 'Data ' + index;
                   });
@@ -80,15 +80,15 @@ This is a component for filtering data based on user input.
                * Will enable or disable appropriate filter.
                */
               _handleTap: function(e) {
-                  let name = e.model.item.name;
-                  let index = this.activeSeries.indexOf(name);
+                  var name = e.model.item.name;
+                  var index = this.activeSeries.indexOf(name);
                   if(e.srcElement.active && index === -1) {
                       if(this.exclusive) {
-                          for(let button of this.$.filterBar.querySelectorAll('paper-button')) {
+                          this.$.filterBar.querySelectorAll('paper-button').forEach(function(button) {
                               if(button !== e.srcElement) {
                                   button.active = false;
                               }
-                          }
+                          });
                           this.set('activeSeries', [name]);
                       } else {
                           this.push('activeSeries', name);

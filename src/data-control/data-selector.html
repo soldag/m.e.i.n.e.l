@@ -38,23 +38,23 @@ This component performs a data projection on the passed data and passes the resu
             transformData: function(data) {
                 if(typeof data === 'undefined') return;
 
-                let keys = this.keys || (this.key ? [this.key] : []);
+                var keys = this.keys || (this.key ? [this.key] : []);
                 return this._selectData(data, keys);
             },
             /** Perform projection defined by key sequence on given data object */
             _selectData: function(data, keys) {
                 if(Array.isArray(data)) {
-                    let that = this;
+                    var that = this;
                     return data.map(function(item) {
                         return that._selectData(item, keys);
                     });
                 }
 
-                for(let key of keys) {
+                keys.forEach(function(key) {
                     if(typeof data !== 'object')
                         return data;
                     data = data[key];
-                }
+                });
                 return data;
             }
         });

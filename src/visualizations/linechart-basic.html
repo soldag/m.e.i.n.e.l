@@ -59,9 +59,10 @@
             },
             /** Gets the data of the plot */
             getPlotData: function(data) {
-                for(let series of data) {
-                    series.mode = series.mode || this.mode;
-                    if(this.highlightLatest) {
+              var that = this;
+                data.forEach(function(series) {
+                    series.mode = series.mode || that.mode;
+                    if(that.highlightLatest) {
                         series.mode = series.mode + '+text';
                         series.textposition = 'middle right';
                         series.textfont = {size: 16};
@@ -69,13 +70,13 @@
                             return i == series.y.length - 1 ? value : '';
                         });
                     }
-                }
+                });
 
                 return data;
             },
             /** Gets the layout options of the plot */
             getLayout: function() {
-                let layout = {
+                var layout = {
                     xaxis: {
                         tickmode: "auto",
                         tickfont: {
@@ -94,8 +95,8 @@
                 };
 
                 if (this.scrollzoom) {
-                    let maxX = data[0]["x"][data[0]["x"].length - 1];
-                    let minX = data[0]["x"][Math.round(data[0]["x"].length * (1 - this.scrollrange / 100))];
+                    var maxX = data[0]["x"][data[0]["x"].length - 1];
+                    var minX = data[0]["x"][Math.round(data[0]["x"].length * (1 - this.scrollrange / 100))];
                     layout.xaxis.rangeslider = {};
                     layout.xaxis.range = [minX, maxX];
                 }

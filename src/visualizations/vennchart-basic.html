@@ -76,21 +76,22 @@
                 dataChanged: function(data) {
                     if(!Array.isArray(data) || data.length === 0) return;
 
-                    for(let set of data) {
-                        if(typeof set.label === 'undefined') continue;
-                        if(this.hideIntersectionLabels && set.sets.length > 1) {
+                    var that = this;
+                    data.forEach(function(set) {
+                        if(typeof set.label === 'undefined') return;
+                        if(that.hideIntersectionLabels && set.sets.length > 1) {
                             set.label = '';
                         }
                         if(typeof set.label !== 'string') {
                           set.label = set.label.toString();
                         }
-                    }
+                    });
 
-                    let chart = venn.VennDiagram()
+                    var chart = venn.VennDiagram()
                                     .width(this.width)
                                     .height(this.height)
                                     .padding(0);
-                    let diagram = d3.select(this.$.diagram);
+                    var diagram = d3.select(this.$.diagram);
                     var tooltip = d3.select(this.$.tooltip)
                     diagram.datum(data).call(chart);
 
@@ -103,14 +104,14 @@
                     }
 
                     // Make diagram responsive
-                    const svg = this.$.diagram.querySelector('svg');
+                    var svg = this.$.diagram.querySelector('svg');
                     svg.removeAttribute("height");
                     svg.removeAttribute("width");
                     svg.setAttribute("viewBox", '0 0 ' + this.width + ' ' + this.height);
                     svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
                     svg.setAttribute("class", "svg-content-responsive");
 
-                    let that = this;
+                    var that = this;
                     diagram.selectAll("g")
                         .on("mouseover", function(d, i) {
                             // Sort all the areas relative to the current item

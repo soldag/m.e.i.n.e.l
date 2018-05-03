@@ -15,21 +15,23 @@
          * @param  {Object} data The data that should be passed.
          */
         passData: function(data) {
-            for (let child of Polymer.dom(this).children) {
-                this._passDataTo(child, data);
-            }
+            var that = this;
+            Polymer.dom(this).children.forEach(function(child) {
+                that._passDataTo(child, data);
+            });
         },
         _passDataTo: function(element, data) {
             // Ensure that descendant elements are initialized
+            var that = this;
             this.async(function() {
               if(element.isDataSource) {
                   return;
               } else if(element.acceptData) {
                   element.receiveData(data);
               } else if(element.childNodes) {
-                  for(let child of element.childNodes) {
-                      this._passDataTo(child, data);
-                  }
+                  element.childNodes.forEach(function(child) {
+                      that._passDataTo(child, data);
+                  });
               }
             });
         },

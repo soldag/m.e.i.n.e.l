@@ -51,9 +51,9 @@
             },
             /** Gets the data of the plot */
             getPlotData: function(data) {
-              let that = this;
+              var that = this;
               return data.map(function(series) {
-                  let plotSeries = {
+                  var plotSeries = {
                       type: series.type || that.type,
                       z: series.z,
                       marker: {

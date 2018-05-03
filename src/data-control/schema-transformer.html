@@ -33,7 +33,7 @@
                 }
 
                 if(this.noMerge) {
-                    let that = this;
+                    var that = this;
                     return this._flatten(data.map(function(item) {
                         return that._applyMappings(item);
                     }));
@@ -42,11 +42,11 @@
                 }
             },
             _applyMappings: function(data) {
-                let that = this;
+                var that = this;
                 return this.mappings.map(function(mapping) {
-                    let result = {};
-                    for(let key of Object.keys(mapping)) {
-                        let transformType = mapping[key].type;
+                    var result = {};
+                    for(var key in mapping) {
+                        var transformType = mapping[key].type;
                         result[key] = that._applyTransformation(transformType, data, mapping[key]);
                     }
 
